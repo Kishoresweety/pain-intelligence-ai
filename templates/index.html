@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pain Intelligence AI</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+        }
+
+        header {
+            background: #1e293b;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            background: #3b82f6;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 12px;
+        }
+
+        h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .grid {
+            display: grid;
+            gap: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>🚀 Pain Intelligence AI</header>
+
+<div class="container">
+
+    <!-- Input -->
+    <div class="card">
+        <h3>🧾 Submit Complaint</h3>
+        <textarea id="complaint" rows="4"></textarea>
+        <button onclick="submitComplaint()">Analyze</button>
+    </div>
+
+    <!-- Output -->
+    <div class="grid">
+        <div class="card">
+            <h3>🧠 Understanding</h3>
+            <pre id="understanding"></pre>
+        </div>
+
+        <div class="card">
+            <h3>🔍 Root Cause</h3>
+            <pre id="cause"></pre>
+        </div>
+
+        <div class="card">
+            <h3>🛠 Solution</h3>
+            <pre id="solution"></pre>
+        </div>
+    </div>
+
+    <!-- Insights -->
+    <div class="card">
+        <h3>📊 Insights</h3>
+        <pre id="insights"></pre>
+        <button onclick="loadInsights()">Load Insights</button>
+    </div>
+
+    <!-- Patterns -->
+    <div class="card">
+        <h3>🔥 Top Problems</h3>
+        <pre id="patterns"></pre>
+        <button onclick="loadPatterns()">Load Patterns</button>
+    </div>
+
+    <!-- Live Feed -->
+    <div class="card">
+        <h3>📡 Live Complaints</h3>
+        <pre id="feed"></pre>
+        <button onclick="loadFeed()">Refresh Feed</button>
+    </div>
+
+</div>
+
+<script>
+async function submitComplaint() {
+    const text = document.getElementById("complaint").value;
+
+    const res = await fetch("/submit", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({text})
+    });
+
+    const data = await res.json();
+
+    document.getElementById("understanding").innerText =
+        JSON.stringify(data.understanding, null, 2);
+
+    document.getElementById("cause").innerText = data.cause;
+    document.getElementById("solution").innerText = data.solution;
+}
+
+async function loadInsights() {
+    const res = await fetch("/insights");
+    const data = await res.json();
+    document.getElementById("insights").innerText = data.insights;
+}
+
+async function loadPatterns() {
+    const res = await fetch("/patterns");
+    const data = await res.json();
+    document.getElementById("patterns").innerText =
+        JSON.stringify(data, null, 2);
+}
+
+async function loadFeed() {
+    const res = await fetch("/all");
+    const data = await res.json();
+    document.getElementById("feed").innerText =
+        JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html>
