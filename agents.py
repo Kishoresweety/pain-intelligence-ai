@@ -4,7 +4,7 @@ import json
 
 client = OpenAI()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client.api_key = os.getenv("OPENAI_API_KEY")
 def call_llm(prompt):
     response = client.ChatCompletion.create(
         model="gpt-4o-mini",
