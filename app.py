@@ -42,7 +42,7 @@ init_db()
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return "API is running 🚀"
 
 
 @app.route('/submit', methods=['POST'])
