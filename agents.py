@@ -1,10 +1,12 @@
 import os
-import openai
+from openai import OpenAI
 import json
+
+client = OpenAI()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 def call_llm(prompt):
-    response = openai.ChatCompletion.create(
+    response = client.ChatCompletion.create(
         model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}]
     )
