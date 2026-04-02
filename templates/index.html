@@ -117,7 +117,7 @@
 async function submitComplaint() {
     const text = document.getElementById("complaint").value;
 
-    const res = await fetch("/submit", {
+    const res = await fetch("https://pain-intelligence-ai.onrender.com/submit", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({text})
@@ -133,20 +133,20 @@ async function submitComplaint() {
 }
 
 async function loadInsights() {
-    const res = await fetch("/insights");
+    const res = await fetch("https://pain-intelligence-ai.onrender.com/insights");
     const data = await res.json();
     document.getElementById("insights").innerText = data.insights;
 }
 
 async function loadPatterns() {
-    const res = await fetch("/patterns");
+    const res = await fetch("https://pain-intelligence-ai.onrender.com/patterns");
     const data = await res.json();
     document.getElementById("patterns").innerText =
         JSON.stringify(data, null, 2);
 }
 
 async function loadFeed() {
-    const res = await fetch("/all");
+    const res = await fetch("https://pain-intelligence-ai.onrender.com/all");
     const data = await res.json();
     document.getElementById("feed").innerText =
         JSON.stringify(data, null, 2);
