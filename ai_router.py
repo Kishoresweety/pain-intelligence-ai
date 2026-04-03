@@ -38,4 +38,8 @@ def get_embedding(text):
         model="text-embedding-3-small",
         input=text
     )
+def smart_response(memory):
+    if memory and memory[0]['score'] > 0.85:
+        return memory[0]['solution']
+        
     return response.data[0].embedding
