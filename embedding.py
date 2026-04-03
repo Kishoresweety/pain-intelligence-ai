@@ -1,7 +1,8 @@
-from openai import OpenAI
+from ai_router import get_embedding
+'''
 import os
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+#client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def get_embedding(text):
     response = client.embeddings.create(
@@ -10,7 +11,7 @@ def get_embedding(text):
     )
     return response.data[0].embedding
 
-''' 
+
 import os
 from openai import OpenAI
 
