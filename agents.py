@@ -1,16 +1,5 @@
-import os
-from openai import OpenAI
 import json
-
-client = OpenAI()
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-def call_llm(prompt):
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response['choices'][0]['message']['content']
+from ai_router import call_ai
 
 
 def understanding_agent(text, memory):
@@ -21,7 +10,7 @@ def understanding_agent(text, memory):
     Analyze this complaint:
     "{text}"
 
-    Return JSON:
+    Return ONLY valid JSON:
     {{
       "intent": "",
       "category": "",
@@ -29,7 +18,16 @@ def understanding_agent(text, memory):
       "keywords": []
     }}
     """
-    return json.loads(call_llm(prompt))
+
+    try:
+        return json.loads(call_ai(prompt))
+    except:
+        return {
+            "intent": "unknown",
+            "category": "general",
+            "emotion": "neutral",
+            "keywords": []
+        }
 
 
 def root_cause_agent(text, context):
@@ -39,7 +37,7 @@ def root_cause_agent(text, context):
 
     What is the root cause?
     """
-    return call_llm(prompt)
+    return call_ai(prompt)
 
 
 def solution_agent(text, cause):
@@ -47,12 +45,12 @@ def solution_agent(text, cause):
     Complaint: {text}
     Cause: {cause}
 
-    Give:
+    Provide:
     - Fix
     - Workaround
     - Prevention
     """
-    return call_llm(prompt)
+    return call_ai(prompt)
 
 
 def insight_agent(texts):
@@ -65,4 +63,4 @@ def insight_agent(texts):
     - Most common category
     - Urgency level
     """
-    return call_llm(prompt)
+    return call_ai(prompt)
