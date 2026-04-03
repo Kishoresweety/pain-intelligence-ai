@@ -1,6 +1,7 @@
 flask
 flask-cors
 openai
+groq
 numpy
 scikit-learn
 gunicorn
